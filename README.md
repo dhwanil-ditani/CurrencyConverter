@@ -27,4 +27,6 @@ pip install -r requirements.txt
 
 
 #### Start WebApp
+```
 python3 manage.py runserver
+```
