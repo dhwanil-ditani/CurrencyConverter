@@ -8,27 +8,28 @@
 </head>
 <body>
     <h1>{{ name }}</h1>
-    <div style="position: relative; width: 500px;">
+    <div style="position: relative; width: 1000px;">
         <canvas id="graph"></canvas>
     </div>
+    {{ labels|json_script:"labels" }}
+    {{ data|json_script:"data" }}
     <script>
         // === include 'setup' then 'config' above ===
-        
-        const labels = [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-        ];
+        // const labels = [
+        //     'January',
+        //     'February',
+        //     'March',
+        //     'April',
+        //     'May',
+        //     'June',
+        // ];
         const data = {
-            labels: labels,
+            labels: JSON.parse(document.getElementById("labels").textContent),
             datasets: [{
                 label: 'My First dataset',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45],
+                data: JSON.parse(document.getElementById("data").textContent),
             }]
         };
 
@@ -43,7 +44,8 @@
             config
         );
         
-        console.log({{ data|safe }});
+        // console.log(JSON.parse(document.getElementById("labels").textContent));
+        // console.log(JSON.parse(document.getElementById("data").textContent));
 
     </script>
 

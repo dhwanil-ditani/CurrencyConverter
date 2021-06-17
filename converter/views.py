@@ -1,5 +1,6 @@
 from django.http.response import HttpResponse
 from django.shortcuts import render
+import json
 import requests
 
 # Create your views here.
@@ -13,9 +14,13 @@ def index(request):
     return render(request, "index.html")
 
 def graph(request):
-    parameters = {"q": "USD_INR", "compact": "ultra", "date": "2021-01-01", "endDate": "2021-01-08", "apiKey": key2}
-    response = requests.get(url2, parameters)
-    context = {"data": response.json()}
+    from_to = "EUR_INR"
+    params = {"apiKey": key2, "compact": "ultra", "q": from_to, "date": "2021-01-01", "endDate": "2021-01-08"}
+    response = requests.get(url2, params)
+    response_data = response.json()
+    labels = list(response_data[from_to].keys())
+    data = list(response_data[from_to].values())
+    context = {"labels": labels, "data": data}
     return render(request, "graph.html", context)
 
 
